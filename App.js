@@ -3,15 +3,19 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  FlatList  } from 'react-native';
+  FlatList,
+  Button  } from 'react-native';
 
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
 
 export default function App() {
-  
+  const[modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
 
+  function startAddGoalHandler(){
+    setModalVisible(true)
+  }
 
   function addGoalHandler(goalText){                                    //or an API
     setGoals(currentGoals => [...currentGoals, {text: goalText, id: Math.random().toString()}])
@@ -24,8 +28,11 @@ export default function App() {
   }; 
   return (
     <View style={styles.appContainer}>
-
-      <GoalInput onAddGoal={addGoalHandler}/>          
+      <Button 
+      title='Add New Goal' 
+      color="#5e0acc"
+      onPress={startAddGoalHandler}/>
+      <GoalInput visible={modalVisible} onAddGoal={addGoalHandler}/>        
 
           <View style={styles.goalsContainer}>
             <Text>List of goals --- Haider Guilherme Nº 5539</Text>
